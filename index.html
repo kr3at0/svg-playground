@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>SVG Playground</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>
+	<script src="//s3-us-west-2.amazonaws.com/s.cdpn.io/16327/MorphSVGPlugin.min.js?r=185"></script>
+	<style>
+		@import url('https://fonts.googleapis.com/css?family=Tillana:400,600');
+
+		.wrapper {
+			width: 250px;
+			margin: 2rem auto 0;
+		}
+		.character-container {
+			padding: 3rem 2rem;
+			border: 3px double #000;
+			border-bottom: 0;
+		}
+
+		#left-stroke-start,
+		#right-stroke-start {
+			visibility:hidden;
+		}
+
+		#left-stroke-end,
+		#right-stroke-end {
+			fill: transparent;
+			stroke: #000;
+			stroke-width: 4px;
+		}
+		@keyframes shake {
+			0% { color: white; }
+			5% { color: darken(white, 100%) }
+			10% { color: darken(white, 60%) }
+			12% { color: darken(white, 40%)  }
+			15% { color: white }
+			20% { color: darken(white, 40%)  }
+			40% { color: darken(white, 100%)  }
+			45% { color: white  }
+			48% { color: darken(white, 60%)  }
+			55% { color: darken(white, 20%)  }
+			100% { text-shadow: 0 0 5px white, 0 0 15px white }
+		}
+		#animate-strokes {
+			display: block;
+			width: 100%;
+			background: black;
+			color: white;
+			padding: 1rem;
+			border: none;
+			font-family: 'Tillana', cursive;
+			font-size: 18px;
+			letter-spacing: 5px;
+			cursor: pointer;
+			animation: shake 2s ease-in-out infinite;
+			transition: 0.2s all ease-in-out;
+			outline: none;
+		}
+		#animate-strokes:hover {
+			animation: none;
+			transform: scale(1.1);
+		}
+		#animate-strokes:focus {
+			animation: none;
+			transform: scale(1);
+		}
+	</style>
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="character-container">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850.39 467.72">
+				<g id="person-character">
+					<path id="left-stroke-end" d="M414.241 39.601c-3.286-10.618-23.384-22.374-60.294-35.267-4.804 0-7.206 3.413-7.206 10.239-2.527 26.04-116.171 151.438-340.914 376.181h14.41c26.293-1.764 70.023-36.026 131.208-102.768 44.237-43.735 80.9-77.986 109.972-102.767L318.3 131.75c52.306-52.8 83.917-79.873 94.958-81.383l.984-1.017v-9.749z"/>
+					<path id="left-stroke-start" d="M353.946 4.334c-4.803 0-7.205 3.413-7.205 10.239-.012.108-.039.232-.054.344 3.528 2.984 9.036 6.221 17.413 9.584 35.5 14.25 42.5 25.5 43.5 26.75.211.264 1.061.27 2.262.118 1.287-.527 2.425-.868 3.395-1.001l.984-1.017v-9.749c-3.286-10.618-23.385-22.374-60.295-35.268z"/>
+					<path id="right-stroke-end" d="M776.014 394.545c-109.469-35.394-217.163-80.261-323.093-134.621-62.948-56.881-107.828-85.323-134.621-85.323v3.413c5.056 9.86 15.795 18.076 32.234 24.649 74.073 77.614 113.132 116.673 117.178 117.177 76.091 92.528 147.003 138.793 212.738 138.793l21.235-3.412c4.55 2.275 7.966 3.412 10.24 3.412 8.342 0 28.567-2.406 60.675-7.205l17.822 3.793c15.415-2.529 30.717-3.793 45.885-3.793h10.998v-14.031c-7.583-10.112-31.348-24.401-71.291-42.852z"/>
+					<path id="right-stroke-start" d="M452.921 259.924c-62.948-56.881-107.828-85.323-134.621-85.323v3.413c5.056 9.86 15.795 18.076 32.234 24.649 36.04 37.762 63.766 66.371 83.228 85.879 12.484-8.007 23.943-18.176 29.51-23.37-3.451-1.748-6.905-3.48-10.351-5.248z"/>
+				</g>
+			</svg>
+		</div>
+	 
+		<button id="animate-strokes">Animate</button>
+	 </div>
+
+	 <script>
+		 const timeline = new TimelineLite();
+
+		function animateStrokes() {
+			const delay = 0.8;
+			timeline
+				.set("#left-stroke-start", {visibility:"visible"})
+				.to("#left-stroke-start", delay, {morphSVG:"#left-stroke-end"})
+				.set("#right-stroke-start", {visibility:"visible"})
+				.to("#right-stroke-start", delay, {morphSVG:"#right-stroke-end"})
+				.seek(0);
+		}
+
+		document.getElementById('animate-strokes').onclick = animateStrokes;	
+	 </script>
+</body>
+
+</html>
